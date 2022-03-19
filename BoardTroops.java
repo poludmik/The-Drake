@@ -12,8 +12,7 @@ public class BoardTroops {
 	private final TilePos leaderPosition;
 	private final int guards;
 	
-	public BoardTroops(PlayingSide playingSide) { 
-		// Místo pro váš kód
+	public BoardTroops(PlayingSide playingSide) {
 		this.playingSide = playingSide;
 		troopMap = Collections.emptyMap();
 		leaderPosition = TilePos.OFF_BOARD;
@@ -25,7 +24,6 @@ public class BoardTroops {
 			Map<BoardPos, TroopTile> troopMap,
 			TilePos leaderPosition, 
 			int guards) {
-		// Místo pro váš kód
 		this.playingSide = playingSide;
 		this.troopMap = troopMap;
 		this.leaderPosition = leaderPosition;
@@ -33,7 +31,6 @@ public class BoardTroops {
 	}
 
 	public Optional<TroopTile> at(TilePos pos) {
-		// Místo pro váš kód
 		Optional<TroopTile> whatIsThat;
 		if (troopMap.containsKey(pos)){
 			whatIsThat = Optional.ofNullable(troopMap.get(pos));
@@ -44,37 +41,30 @@ public class BoardTroops {
 	}
 	
 	public PlayingSide playingSide() {
-		// Místo pro váš kód
 		return playingSide;
 	}
 	
 	public TilePos leaderPosition() {
-		// Místo pro váš kód
 		return leaderPosition;
 	}
 
 	public int guards() {
-		// Místo pro váš kód
 		return guards;
 	}
 
 	public boolean isLeaderPlaced() {
-		// Místo pro váš kód
 		return leaderPosition != TilePos.OFF_BOARD;
 	}
 
 	public boolean isPlacingGuards() {
-		// Místo pro váš kód
 		return isLeaderPlaced() && guards < 2;
 	}
 
 	public Set<BoardPos> troopPositions() {
-		// Místo pro váš kód
 		return troopMap.keySet();
 	}
 
 	public BoardTroops placeTroop(Troop troop, BoardPos target) {
-		// Místo pro váš kód
 		TroopTile newTroopTile = new TroopTile(troop, playingSide, TroopFace.AVERS);
 		if (troopMap.containsKey(target)){
 			throw new IllegalArgumentException();
@@ -97,8 +87,6 @@ public class BoardTroops {
 	}
 	
 	public BoardTroops troopStep(BoardPos origin, BoardPos target) {
-		// Místo pro váš kód
-
 		if (leaderPosition == TilePos.OFF_BOARD || isPlacingGuards()) {
 			throw new IllegalStateException();
 		}
@@ -141,8 +129,6 @@ public class BoardTroops {
 	}
 	
 	public BoardTroops removeTroop(BoardPos target) {
-		// Místo pro váš kód
-
 		if (leaderPosition == TilePos.OFF_BOARD || isPlacingGuards()) {
 			throw new IllegalStateException();
 		}
