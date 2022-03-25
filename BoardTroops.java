@@ -1,12 +1,9 @@
 package thedrake;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.io.PrintWriter;
+import java.util.*;
 
-public class BoardTroops {
+public class BoardTroops implements JSONSerializable {
 	private final PlayingSide playingSide;
 	private final Map<BoardPos, TroopTile> troopMap;
 	private final TilePos leaderPosition;
@@ -143,5 +140,36 @@ public class BoardTroops {
 		} else {
 			return new BoardTroops(playingSide, troopMap, leaderPosition, guards);
 		}
-	}	
+	}
+
+	@Override
+	public void toJSON(PrintWriter writer) {
+		writer.printf("{");
+
+		writer.printf("\"side\":");
+		playingSide.toJSON(writer);
+		writer.printf(",\"leaderPosition\":");
+		leaderPosition.toJSON(writer);
+		writer.printf(",\"guards\":%s", guards);
+
+
+		writer.printf(",\"troopMap\":");
+		writer.printf("{");
+		Set<BoardPos> keys = troopPositions();
+		List<BoardPos> keysArray = new ArrayList<>(keys);
+		keysArray.sort((p1, p2) -> p1.toString().compareTo(p2.toString()));
+
+		int count = 0;
+		for (BoardPos pos: keysArray) {
+			pos.toJSON(writer);
+			writer.printf(":");
+			troopMap.get(pos).toJSON(writer);
+			++count;
+			if (count < keysArray.size())
+				writer.printf(",");
+		}
+		writer.printf("}");
+
+		writer.printf("}");
+	}
 }

@@ -1,5 +1,6 @@
 package thedrake;
 
+import java.io.PrintWriter;
 import java.util.List;
 
 public interface TilePos {
@@ -67,10 +68,17 @@ public interface TilePos {
 		public boolean equalsTo(int i, int j) {
 			return false;
 		}
-		
+
+		@Override
+		public void toJSON(PrintWriter writer) {
+			writer.printf("\"%s\"", this);
+		}
+
 		@Override
 		public String toString() {
 			return "off-board";
 		}
 	};
+
+	void toJSON(PrintWriter writer);
 }

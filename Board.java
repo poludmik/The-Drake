@@ -1,5 +1,7 @@
 package thedrake;
 
+import java.io.PrintWriter;
+
 public class Board {
 
 	BoardTile[][] gameField;
@@ -48,7 +50,23 @@ public class Board {
 	public PositionFactory positionFactory() {
 		return new PositionFactory(dimension);
 	}
-	
+
+	public void toJSON(PrintWriter writer) {
+		writer.printf("{\"dimension\":%s", dimension);
+		writer.printf(",\"tiles\":[");
+		int count = 0;
+		for (int i = 0; i < dimension; ++i) {
+			for (int j = 0; j < dimension; ++j) {
+				at(new BoardPos(dimension, j, i)).toJSON(writer);
+				++count;
+				if (count < dimension * dimension) {
+					writer.printf(",");
+				}
+			}
+		}
+		writer.printf("]}");
+	}
+
 	public static class TileAt {
 		public final BoardPos pos;
 		public final BoardTile tile;
