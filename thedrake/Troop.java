@@ -5,13 +5,13 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Troop implements JSONSerializable{
+public class Troop implements JSONSerializable {
 
     private final String name;
     private final Offset2D aversPivot;
     private final Offset2D reversPivot;
-    private List<TroopAction> aversActions  = new ArrayList<TroopAction>();
-    private List<TroopAction> reversActions  = new ArrayList<TroopAction>();
+    private List<TroopAction> aversActions = new ArrayList<TroopAction>();
+    private List<TroopAction> reversActions = new ArrayList<TroopAction>();
 
     public Troop(String name, Offset2D aversPivot, Offset2D reversPivot, List<TroopAction> aversActions, List<TroopAction> reversActions) {
         this.name = name;
@@ -45,12 +45,12 @@ public class Troop implements JSONSerializable{
 
 
     // Vrací jméno jednotky
-    public String name(){
+    public String name() {
         return name;
     }
 
     // Vrací pivot na zadané straně jednotky
-    public Offset2D pivot(TroopFace face){
+    public Offset2D pivot(TroopFace face) {
         if (face == TroopFace.AVERS) return aversPivot;
         else return reversPivot;
     }

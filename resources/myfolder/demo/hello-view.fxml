@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.Button?>
+<VBox alignment="CENTER" spacing="35.0" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="myfolder.demo.ApplicationController">
+    <padding>
+        <Insets bottom="10.0" left="8.0" right="12.0" top="130.0"/>
+    </padding>
+
+    <Label fx:id="welcomeText"  style="-fx-text-fill: #FFFF84;" />
+    <Label fx:id="welcumText"  style="-fx-text-fill: #FFFFFF;" />
+    <Button text="  Hra dvou hráčů  " prefWidth="120" scaleX="1.7" scaleY="1.7" onAction="#playerVSplayerClick" stylesheets="@button.css"/>
+    <Button text="Hra proti počítači" prefWidth="114" scaleX="1.7" scaleY="1.7" onAction="#pcButton" stylesheets="@button.css"/>
+    <Button text=" Hra po internetu " prefWidth="108" scaleX="1.7" scaleY="1.7" onAction="#internetButtonClick" stylesheets="@button.css"/>
+    <Button fx:id="closeButton" text="       Konec      " prefWidth="100" scaleX="1.7" scaleY="1.7" onAction="#closeButtonAction" stylesheets="@button.css"/>
+</VBox>

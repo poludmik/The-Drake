@@ -2,7 +2,7 @@ package thedrake;
 
 import java.io.PrintWriter;
 
-public enum PlayingSide implements JSONSerializable{
+public enum PlayingSide implements JSONSerializable {
     ORANGE, BLUE;
 
     @Override
