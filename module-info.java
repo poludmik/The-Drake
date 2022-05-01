@@ -6,4 +6,5 @@ module java.myfolder.demo {
 
     opens myfolder.demo to javafx.fxml;
     exports myfolder.demo;
+    exports thedrake.ui;
 }
