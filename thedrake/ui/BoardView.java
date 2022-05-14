@@ -1,7 +1,10 @@
 package thedrake.ui;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -17,6 +20,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import thedrake.*;
 import myfolder.demo.*;
+
+import javax.imageio.IIOException;
 
 import static myfolder.demo.ApplicationController.returnStandardGroup;
 
@@ -105,6 +110,7 @@ public class BoardView extends GridPane implements TileViewContext {
 
 
         boolean blueWon = false, orangeWon = false;
+
         for (Troop troopKilledByBlue : gameState.army(PlayingSide.BLUE).captured()) {
             if (troopKilledByBlue.name().contains("Drake")){
                 // Blue wins
@@ -118,6 +124,16 @@ public class BoardView extends GridPane implements TileViewContext {
                 // Orange wins
                 orangeWon = true;
                 break;
+            }
+        }
+
+        ValidMoves validMoves_test = new ValidMoves(gameState);
+        if (validMoves_test.allMoves().isEmpty()){
+            PlayingSide lost_side = gameState.sideOnTurn();
+            if (lost_side == PlayingSide.BLUE) {
+                orangeWon = true;
+            } else {
+                blueWon = true;
             }
         }
 
@@ -135,7 +151,13 @@ public class BoardView extends GridPane implements TileViewContext {
             button2.setTranslateY(350);
             button2.setPrefSize(200, 50);
             button2.setText("Menu");
-            button.setOnAction(event -> goToMenu());
+            button2.setOnAction(event -> {
+                try {
+                    goToMenu();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
             button2.setFont(Font.font(java.awt.Font.SERIF, 20));
 
 
@@ -160,7 +182,8 @@ public class BoardView extends GridPane implements TileViewContext {
             Board board = new Board(4);
 
             PositionFactory positionFactory = board.positionFactory();
-            board = board.withTiles(new Board.TileAt(positionFactory.pos(1, 2), BoardTile.MOUNTAIN));
+            board = board.withTiles(new Board.TileAt(positionFactory.pos(TheDrakeApp.mountainI, TheDrakeApp.mountainJ), BoardTile.MOUNTAIN));
+            board = board.withTiles(new Board.TileAt(positionFactory.pos(TheDrakeApp.mountainI2, TheDrakeApp.mountainJ2), BoardTile.MOUNTAIN));
             gameState = new StandardDrakeSetup().startState(board);
 
             Group newRoot = new Group(button, button2, text, view);
@@ -183,8 +206,25 @@ public class BoardView extends GridPane implements TileViewContext {
         stage.show();
     }
 
-    public void goToMenu() {
+    public void goToMenu() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("hello-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+        scene.getStylesheets().add("test.css");
+        stage.setScene(scene);
+        stage.setTitle("You have an amazing smile!");
+        stage.show();
 
+        Board board = new Board(4);
+        ApplicationController cntlr = fxmlLoader.getController();
+        cntlr.gameState = createStartGameState(board);
+        cntlr.board = board;
+    }
+
+    private GameState createStartGameState(Board board) {
+        PositionFactory positionFactory = board.positionFactory();
+        board = board.withTiles(new Board.TileAt(positionFactory.pos(TheDrakeApp.mountainI, TheDrakeApp.mountainJ), BoardTile.MOUNTAIN));
+        board = board.withTiles(new Board.TileAt(positionFactory.pos(TheDrakeApp.mountainI2, TheDrakeApp.mountainJ2), BoardTile.MOUNTAIN));
+        return new StandardDrakeSetup().startState(board);
     }
 
     private void clearMoves() {

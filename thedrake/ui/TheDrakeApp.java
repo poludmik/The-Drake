@@ -13,9 +13,18 @@ import thedrake.GameState;
 import thedrake.PositionFactory;
 import thedrake.StandardDrakeSetup;
 
+
+
+
 public class TheDrakeApp extends Application {
 
     static ApplicationController myControllerHandle;
+
+    final static int mountainI = 0;
+    final static int mountainJ = 2;
+    final static int mountainI2 = 3;
+    final static int mountainJ2 = 1;
+
     private Board board;
 
     public static void main(String[] args) {
@@ -39,14 +48,15 @@ public class TheDrakeApp extends Application {
 
     private GameState createStartGameState() {
         PositionFactory positionFactory = board.positionFactory();
-        board = board.withTiles(new Board.TileAt(positionFactory.pos(1, 2), BoardTile.MOUNTAIN));
-        return new StandardDrakeSetup().startState(board)
-                .placeFromStack(positionFactory.pos(0, 0))
-                .placeFromStack(positionFactory.pos(3, 3))
-                .placeFromStack(positionFactory.pos(0, 1))
-                .placeFromStack(positionFactory.pos(3, 2))
-                .placeFromStack(positionFactory.pos(1, 0))
-                .placeFromStack(positionFactory.pos(2, 3));
+        board = board.withTiles(new Board.TileAt(positionFactory.pos(mountainI, mountainJ), BoardTile.MOUNTAIN));
+        board = board.withTiles(new Board.TileAt(positionFactory.pos(mountainI2, mountainJ2), BoardTile.MOUNTAIN));
+        return new StandardDrakeSetup().startState(board);
+//                .placeFromStack(positionFactory.pos(0, 0))
+//                .placeFromStack(positionFactory.pos(3, 3))
+//                .placeFromStack(positionFactory.pos(0, 1))
+//                .placeFromStack(positionFactory.pos(3, 2))
+//                .placeFromStack(positionFactory.pos(1, 0))
+//                .placeFromStack(positionFactory.pos(2, 3));
     }
 
 }
