@@ -43,7 +43,6 @@ public class Troop implements JSONSerializable {
         else return reversActions;
     }
 
-
     // Vrací jméno jednotky
     public String name() {
         return name;

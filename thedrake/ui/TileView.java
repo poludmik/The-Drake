@@ -1,5 +1,6 @@
 package thedrake.ui;
 
+import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
@@ -8,6 +9,7 @@ import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import thedrake.BoardPos;
 import thedrake.Move;
 import thedrake.Tile;
@@ -29,6 +31,11 @@ public class TileView extends Pane {
 
     private final ImageView moveImage;
 
+    @FXML
+    private javafx.scene.control.Button closeButton;
+
+    private final ImageView moveImage_stack;
+
     public TileView(BoardPos boardPos, Tile tile, TileViewContext tileViewContext) {
         this.boardPos = boardPos;
         this.tile = tile;
@@ -40,8 +47,11 @@ public class TileView extends Pane {
         setOnMouseClicked(e -> onClick());
 
         moveImage = new ImageView(getClass().getResource("/assets/move.png").toString());
+        moveImage_stack = new ImageView(getClass().getResource("/assets/move_stack.png").toString());
+        moveImage_stack.setVisible(false);
         moveImage.setVisible(false);
         getChildren().add(moveImage);
+        getChildren().add(moveImage_stack);
     }
 
     private void onClick() {
@@ -66,13 +76,17 @@ public class TileView extends Pane {
 
     public void setMove(Move move) {
         this.move = move;
-        moveImage.setVisible(true);
-
+        if (move.toString().contains("PlaceFromStack")) {
+            moveImage_stack.setVisible(true);
+        } else {
+            moveImage.setVisible(true);
+        }
     }
 
     public void clearMove() {
         this.move = null;
         moveImage.setVisible(false);
+        moveImage_stack.setVisible(false);
     }
 
     public BoardPos position() {
